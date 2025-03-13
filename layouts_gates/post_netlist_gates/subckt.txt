@@ -1,0 +1,437 @@
+* * Inverter
+.subckt inv out in vdd gnd
+M1 out in gnd gnd CMOSN W={W_N} L={len}
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N}
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+M2 out in vdd vdd CMOSP W={W_P} L={len}
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P}
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+.ends inv
+
+
+* * Repeater (redstone buffer) 
+.subckt buffer out in vdd gnd
+Xinv mid in vdd gnd inv
+Xinv2 out mid vdd gnd inv
+.ends buffer
+
+
+* * MUX
+.subckt mux out select a b vdd gnd
+
+M_PMOSB Y select a vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_NMOSA Y select b gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+Xmuxbuffer out Y vdd gnd buffer ; repeater buffer attached
+.ends mux
+
+
+
+.subckt exor2 out a b vdd gnd
+
+Xinv a_inv a vdd gnd inv
+
+M_PMOSB1 out b a vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_NMOSB1 a_inv b out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+
+M_PMOSB2 out a b vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_NMOSB2 b a_inv out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+.ends exor2
+
+
+* .subckt xor2 out a b vdd gnd
+* Xinv b_inv b vdd gnd inv
+* Xmux y a b b_inv vdd gnd mux
+* Xbuff out y vdd gnd buffer
+
+* .ends xor2
+
+
+.subckt d_latch q d en vdd gnd 
+
+Xinv d_inv d vdd gnd inv
+Xnand1 out_n1 d en vdd gnd nand2
+Xnand2 out_n2 d_inv en vdd gnd nand2
+Xnand3 q out_n1 q1 vdd gnd nand2
+Xnand4 q1 out_n2 q vdd gnd nand2
+* Xbuff q_final q vdd gnd buffer
+
+.ends d_latch
+
+
+
+
+
+
+
+
+* * 4 Bit Q_FF
+.subckt d_block_4bit q3 q2 q1 q0 d3 d2 d1 d0 clk vdd gnd
+
+Xd3_ff q3 d3 clk vdd gnd d_ff
+Xd2_ff q2 d2 clk vdd gnd d_ff
+Xd1_ff q1 d1 clk vdd gnd d_ff
+Xd0_ff q0 d0 clk vdd gnd d_ff
+
+.ends d_block_4bitz
+
+
+
+.subckt nand2 out a b vdd gnd
+
+M_PMOSA out a vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSB out b vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_NMOSA y a out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSB gnd b y gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+.ends nand2
+
+
+.subckt and2 out a b vdd gnd
+
+Xnand2 y a b vdd gnd nand2
+Xinv out y vdd gnd inv
+
+.ends and2
+
+
+
+.subckt nand3 out a b c vdd gnd
+
+M_PMOSA out a vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSB out b vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSC out c vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+
+M_NMOSA y a out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSB x b y gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSC gnd c x gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+.ends nand3
+
+
+.subckt and3 out a b c vdd gnd
+
+Xnand3 y a b c vdd gnd nand3
+Xinv out y vdd gnd inv
+
+.ends and3
+
+
+
+.subckt nand4 out a b c d vdd gnd
+
+M_PMOSA out a vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSB out b vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSC out c vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSD out d vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+
+M_NMOSA z a out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSB y b z gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSC x c y gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSD gnd d x gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+.ends nand4
+
+
+.subckt and4 out a b c d vdd gnd
+
+Xnand4 y a b c d vdd gnd nand4
+Xinv out y vdd gnd inv
+
+.ends and4
+
+
+
+.subckt nand5 out a b c d e vdd gnd
+
+M_PMOSA out a vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSB out b vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSC out c vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSD out d vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSE out e vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+
+M_NMOSA z a out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSB y b z gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSC x c y gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSD w d x gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSE gnd e w gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+.ends nand5
+
+
+.subckt and5 out a b c d e vdd gnd
+
+Xnand5 y a b c d e vdd gnd nand5
+Xinv out y vdd gnd inv
+
+.ends and5
+
+
+
+.subckt nor2 out a b vdd gnd
+
+M_PMOSA y a vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSB out b y vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_NMOSA gnd a out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSB gnd b out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+.ends nor2
+
+
+.subckt or2 out a b vdd gnd
+
+Xnor2 y a b vdd gnd nor2
+Xinv out y vdd gnd inv
+
+.ends or2
+
+
+
+.subckt nor3 out a b c vdd gnd
+
+M_PMOSA z a vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSB y b z vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSC out c y vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+
+M_NMOSA gnd a out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSB gnd b out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSC gnd c out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+.ends nor3
+
+
+.subckt or3 out a b c vdd gnd
+
+Xnor3 y a b c vdd gnd nor3
+Xinv out y vdd gnd inv
+
+.ends or3
+
+
+
+.subckt nor4 out a b c d vdd gnd
+
+M_PMOSA z a vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSB y b z vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSC x c y vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSD out d x vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+
+M_NMOSA gnd a out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSB gnd b out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSC gnd c out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSD gnd d out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+.ends nor4
+
+
+.subckt or4 out a b c d vdd gnd
+
+Xnor4 y a b c d vdd gnd nor4
+Xinv out y vdd gnd inv
+    
+.ends or4
+
+
+
+.subckt nor5 out a b c d e vdd gnd
+
+M_PMOSA z a vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSB y b z vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSC x c y vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSD w d x vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOSE out e w vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+
+M_NMOSA gnd a out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSB gnd b out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSC gnd c out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSD gnd d out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOSE gnd e out gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+.ends nor5
+
+
+.subckt or5 out a b c d e vdd gnd
+
+Xnor5 y a b c d e vdd gnd nor5
+Xinv out y vdd gnd inv
+
+.ends or5
+
+
+

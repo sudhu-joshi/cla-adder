@@ -1,0 +1,120 @@
+.include TSMC_180nm.txt
+.include subckt.txt
+
+.param SUPPLY=1.8
+.param LAMBDA = 0.09u
+.param len = 2*LAMBDA
+.param W_P = 20*LAMBDA
+.param W_N = 10*LAMBDA
+
+.global gnd vdd 
+vdd vdd gnd 'SUPPLY'
+
+* Input Pulses
+VA A gnd pulse (0 SUPPLY 10ns .1ns .1ns 10ns 20ns)
+VB B gnd pulse (0 SUPPLY 20ns .1ns .1ns 20ns 40ns)
+VC C gnd pulse (0 SUPPLY 40ns .1ns .1ns 40ns 80ns)
+VD D gnd pulse (0 SUPPLY 80ns .1ns .1ns 80ns 160ns)
+
+
+* SPICE3 file created from or4.ext - technology: scmos
+
+.option scale=0.09u
+
+M1000 a_13_n41# a gnd Gnd CMOSN w=40 l=2
++  ad=960 pd=368 as=1200 ps=460
+M1001 out a_13_n41# gnd Gnd CMOSN w=40 l=2
++  ad=240 pd=92 as=0 ps=0
+M1002 a_13_36# a vdd w_n1_30# CMOSP w=40 l=2
++  ad=480 pd=184 as=480 ps=184
+M1003 a_13_n41# b gnd Gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1004 a_13_n41# d gnd Gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1005 a_48_36# b a_13_36# w_34_30# CMOSP w=40 l=2
++  ad=480 pd=184 as=0 ps=0
+M1006 a_13_n41# c gnd Gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1007 a_83_36# c a_48_36# w_69_30# CMOSP w=40 l=2
++  ad=480 pd=184 as=0 ps=0
+M1008 out a_13_n41# vdd w_136_23# CMOSP w=40 l=2
++  ad=240 pd=92 as=0 ps=0
+M1009 a_13_n41# d a_83_36# w_104_30# CMOSP w=40 l=2
++  ad=240 pd=92 as=0 ps=0
+C0 c a_83_36# 0.05fF
+C1 w_136_23# vdd 0.09fF
+C2 b a_48_36# 0.05fF
+C3 c d 0.04fF
+C4 a a_13_36# 0.01fF
+C5 d gnd 0.07fF
+C6 a_83_36# a_13_n41# 0.56fF
+C7 a_13_36# vdd 0.49fF
+C8 d a_13_n41# 0.26fF
+C9 a b 0.00fF
+C10 c gnd 0.07fF
+C11 c a_13_n41# 0.83fF
+C12 w_n1_30# a 0.07fF
+C13 w_136_23# a_13_n41# 0.07fF
+C14 a_13_n41# gnd 1.85fF
+C15 vdd out 0.45fF
+C16 b d 0.06fF
+C17 w_104_30# a_83_36# 0.09fF
+C18 w_n1_30# vdd 0.09fF
+C19 w_69_30# a_48_36# 0.09fF
+C20 w_104_30# d 0.07fF
+C21 w_34_30# a_13_36# 0.09fF
+C22 a_13_36# a_13_n41# 0.12fF
+C23 a_48_36# a_83_36# 0.49fF
+C24 b c 0.05fF
+C25 b gnd 0.07fF
+C26 w_34_30# b 0.07fF
+C27 b a_13_n41# 0.31fF
+C28 w_136_23# out 0.07fF
+C29 c a_48_36# 0.02fF
+C30 out gnd 0.41fF
+C31 b a_13_36# 0.02fF
+C32 w_104_30# a_13_n41# 0.07fF
+C33 a_13_n41# out 0.07fF
+C34 a d 0.00fF
+C35 w_69_30# a_83_36# 0.07fF
+C36 w_34_30# a_48_36# 0.07fF
+C37 a_48_36# a_13_n41# 0.12fF
+C38 w_n1_30# a_13_36# 0.07fF
+C39 d a_83_36# 0.04fF
+C40 a_13_36# a_48_36# 0.49fF
+C41 a c 0.00fF
+C42 w_69_30# c 0.07fF
+C43 gnd Gnd 0.45fF
+C44 out Gnd 0.15fF
+C45 vdd Gnd 0.11fF
+C46 a_13_n41# Gnd 0.54fF
+C47 a_83_36# Gnd 0.30fF
+C48 a_48_36# Gnd 0.30fF
+C49 a_13_36# Gnd 0.30fF
+C50 d Gnd 0.41fF
+C51 c Gnd 0.93fF
+C52 b Gnd 0.34fF
+C53 a Gnd 0.26fF
+C54 w_136_23# Gnd 0.12fF
+C55 w_104_30# Gnd 1.36fF
+C56 w_69_30# Gnd 1.36fF
+C57 w_34_30# Gnd 1.36fF
+C58 w_n1_30# Gnd 1.36fF
+
+
+
+
+* Simulation Setup
+.tran 0.01ns 1000ns
+.control
+    set hcopypscolor = 1
+    set color0 = black
+    set color1 = white
+    run
+    set curplottitle= or4_post
+    plot v(A) v(B)+2 v(C)+4 v(D)+6 v(out)+8
+
+.endc
+.end
+
+

@@ -1,0 +1,77 @@
+.include TSMC_180nm.txt
+.include subckt.txt
+
+.param SUPPLY=1.8
+.param LAMBDA = 0.09u
+.param len = 2*LAMBDA
+.param W_P = 20*LAMBDA
+.param W_N = 10*LAMBDA
+.option scale=0.09u
+.global gnd vdd 
+vdd vdd gnd 'SUPPLY'
+
+* Input Pulses
+VA A gnd pulse (0 SUPPLY 10ns 0.01ns 0.01ns 10ns 20ns)
+VB B gnd pulse (0 SUPPLY 20ns 0.01ns 0.01ns 20ns 40ns)
+* VC C gnd pulse (0 SUPPLY 40ns .1ns .1ns 40ns 80ns)
+* VD D gnd pulse (0 SUPPLY 80ns .1ns .1ns 80ns 160ns)
+
+* SPICE3 file created from xor2.ext - technology: scmos
+
+.option scale=0.09u
+
+M1000 out a b w_73_76# CMOSP w=40 l=2
++  ad=480 pd=184 as=240 ps=92
+M1001 a_inv a gnd gnd CMOSN w=40 l=2
++  ad=480 pd=184 as=240 ps=92
+M1002 out b a w_38_72# CMOSP w=40 l=2
++  ad=0 pd=0 as=240 ps=92
+M1003 out b a_inv gnd CMOSN w=40 l=2
++  ad=480 pd=184 as=0 ps=0
+M1004 out a_inv b gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=240 ps=92
+M1005 a_inv a vdd w_6_72# CMOSP w=40 l=2
++  ad=240 pd=92 as=240 ps=92
+C0 b out 0.95fF
+C1 out w_73_76# 0.07fF
+C2 a w_38_72# 0.07fF
+C3 a_inv a 0.08fF
+C4 a_inv gnd 0.47fF
+C5 b w_38_72# 0.07fF
+C6 vdd w_6_72# 0.09fF
+C7 out w_38_72# 0.07fF
+C8 b a_inv 0.40fF
+C9 b a 0.15fF
+C10 a w_73_76# 0.07fF
+C11 a_inv out 1.05fF
+C12 out a 0.55fF
+C13 vdd a_inv 0.45fF
+C14 a_inv w_6_72# 0.07fF
+C15 a w_6_72# 0.07fF
+C16 b w_73_76# 0.07fF
+C17 gnd gnd 0.12fF
+C18 out gnd 0.13fF
+C19 a_inv gnd 0.52fF
+C20 vdd gnd 0.09fF
+C21 b gnd 0.30fF
+C22 a gnd 0.53fF
+C23 w_73_76# gnd 1.36fF
+C24 w_38_72# gnd 0.12fF
+C25 w_6_72# gnd 0.16fF
+
+* Simulation Setup
+.tran 0.01ns 40ns
+.control
+    set hcopypscolor = 1
+    set color0 = black
+    set color1 = white
+    run
+    set curplottitle= xor2_post
+    plot v(A) v(B) v(out)+2
+
+.endc
+.end
+
+
+
+

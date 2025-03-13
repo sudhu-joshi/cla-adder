@@ -1,0 +1,379 @@
+.include TSMC_180nm.txt
+.include subckt.txt
+
+.param SUPPLY=1.8
+.param LAMBDA = 0.09u
+.param len = 2*LAMBDA
+.param W_P = 20*LAMBDA
+.param W_N = 10*LAMBDA
+
+.option scale=0.09u
+
+.global gnd vdd 
+vdd vdd gnd 'SUPPLY'
+
+* * Input Pulses
+* * Used PWL for input tests
+* VA0 a0 gnd pwl(0ns 0V)
+* VA1 a1 gnd PWL(0ns 1.8V)
+* VA2 a2 gnd PWL(0ns 1.8V)
+* VA3 a3 gnd PWL(0ns 0V)
+
+* VB0 b0 gnd PWL(0ns 1.8V)
+* VB1 b1 gnd PWL(0ns 1.8V)
+* VB2 b2 gnd PWL(0ns 1.8V)
+* VB3 b3 gnd PWL(0ns 1.8V)
+
+* VC0 c0 gnd PWL(0ns 0V)
+
+VA0 a0 gnd pulse (0 SUPPLY 10ns 1ps 1ps 10ns 20ns)
+VA1 a1 gnd pulse (0 SUPPLY 20ns 1ps 1ps 20ns 40ns)
+VA2 a2 gnd pulse (0 SUPPLY 40ns 1ps 1ps 40ns 80ns)
+VA3 a3 gnd pulse (0 SUPPLY 80ns 1ps 1ps 80ns 160ns)
+
+VB0 b0 gnd pulse (0 SUPPLY 160ns 1ps 1ps 160ns 320ns)
+VB1 b1 gnd pulse (0 SUPPLY 320ns 1ps 1ps 320ns 640ns)
+VB2 b2 gnd pulse (0 SUPPLY 640ns 1ps 1ps 640ns 1280ns)
+VB3 b3 gnd pulse (0 SUPPLY 1280ns 1ps 1ps 1280ns 2560ns)
+
+Vclk clk gnd pulse (0 SUPPLY 1ns 1ps 1ps 2ns 4ns)
+
+VC0 c0 gnd pulse (0 SUPPLY 2560ns 1ps 1ps 2560ns 5120ns)
+
+* SPICE3 file created from propgen.ext - technology: scmos
+
+M1000 vdd a1 a_n123_n63# w_n58_n37# CMOSP w=40 l=2
++  ad=3840 pd=1472 as=480 ps=184
+M1001 a_10_n99# b1 p1 gnd CMOSN w=40 l=2
++  ad=480 pd=184 as=480 ps=184
+M1002 a_n123_n183# b0 a_n123_n191# gnd CMOSN w=40 l=2
++  ad=480 pd=184 as=240 ps=92
+M1003 a_10_n227# b0 p0 gnd CMOSN w=40 l=2
++  ad=480 pd=184 as=480 ps=184
+M1004 a_n123_201# b3 a_n123_193# gnd CMOSN w=40 l=2
++  ad=480 pd=184 as=240 ps=92
+M1005 vdd a3 a_10_157# w_74_212# CMOSP w=40 l=2
++  ad=0 pd=0 as=240 ps=92
+M1006 vdd a_n123_65# g2 w_n58_27# CMOSP w=40 l=2
++  ad=0 pd=0 as=240 ps=92
+M1007 vdd a_n123_n191# g0 w_n58_n229# CMOSP w=40 l=2
++  ad=0 pd=0 as=240 ps=92
+M1008 vdd b3 a_n123_193# w_n58_187# CMOSP w=40 l=2
++  ad=0 pd=0 as=480 ps=184
+M1009 vdd a0 a_n123_n191# w_n58_n165# CMOSP w=40 l=2
++  ad=0 pd=0 as=480 ps=184
+M1010 gnd a2 a_n123_73# gnd CMOSN w=40 l=2
++  ad=2880 pd=1104 as=480 ps=184
+M1011 a_10_157# b3 p3 gnd CMOSN w=40 l=2
++  ad=480 pd=184 as=480 ps=184
+M1012 a2 b2 p2 w_74_52# CMOSP w=40 l=2
++  ad=240 pd=92 as=480 ps=184
+M1013 b3 a3 p3 w_78_145# CMOSP w=40 l=2
++  ad=240 pd=92 as=480 ps=184
+M1014 b0 a0 p0 w_78_n239# CMOSP w=40 l=2
++  ad=240 pd=92 as=480 ps=184
+M1015 gnd a_n123_193# g3 gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=240 ps=92
+M1016 gnd a2 a_10_29# gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=480 ps=184
+M1017 vdd b2 a_n123_65# w_n58_59# CMOSP w=40 l=2
++  ad=0 pd=0 as=480 ps=184
+M1018 a_n123_n55# b1 a_n123_n63# gnd CMOSN w=40 l=2
++  ad=480 pd=184 as=240 ps=92
+M1019 a1 b1 p1 w_74_n76# CMOSP w=40 l=2
++  ad=240 pd=92 as=480 ps=184
+M1020 vdd a3 a_n123_193# w_n58_219# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1021 gnd a1 a_n123_n55# gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1022 vdd b1 a_n123_n63# w_n58_n69# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1023 a_n123_73# b2 a_n123_65# gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=240 ps=92
+M1024 gnd a1 a_10_n99# gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1025 b1 a_10_n99# p1 gnd CMOSN w=40 l=2
++  ad=240 pd=92 as=0 ps=0
+M1026 gnd a_n123_65# g2 gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=240 ps=92
+M1027 gnd a_n123_n63# g1 gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=240 ps=92
+M1028 a3 b3 p3 w_74_180# CMOSP w=40 l=2
++  ad=240 pd=92 as=0 ps=0
+M1029 b2 a_10_29# p2 gnd CMOSN w=40 l=2
++  ad=240 pd=92 as=480 ps=184
+M1030 vdd b0 a_n123_n191# w_n58_n197# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1031 b0 a_10_n227# p0 gnd CMOSN w=40 l=2
++  ad=240 pd=92 as=0 ps=0
+M1032 b2 a2 p2 w_78_17# CMOSP w=40 l=2
++  ad=240 pd=92 as=0 ps=0
+M1033 vdd a0 a_10_n227# w_74_n172# CMOSP w=40 l=2
++  ad=0 pd=0 as=240 ps=92
+M1034 vdd a_n123_193# g3 w_n58_155# CMOSP w=40 l=2
++  ad=0 pd=0 as=240 ps=92
+M1035 vdd a2 a_10_29# w_74_84# CMOSP w=40 l=2
++  ad=0 pd=0 as=240 ps=92
+M1036 gnd a0 a_n123_n183# gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1037 gnd a3 a_10_157# gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1038 vdd a2 a_n123_65# w_n58_91# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1039 gnd a0 a_10_n227# gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1040 gnd a3 a_n123_201# gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1041 a_10_29# b2 p2 gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1042 b1 a1 p1 w_78_n111# CMOSP w=40 l=2
++  ad=240 pd=92 as=0 ps=0
+M1043 a0 b0 p0 w_74_n204# CMOSP w=40 l=2
++  ad=240 pd=92 as=0 ps=0
+M1044 vdd a1 a_10_n99# w_74_n44# CMOSP w=40 l=2
++  ad=0 pd=0 as=240 ps=92
+M1045 vdd a_n123_n63# g1 w_n58_n101# CMOSP w=40 l=2
++  ad=0 pd=0 as=240 ps=92
+M1046 b3 a_10_157# p3 gnd CMOSN w=40 l=2
++  ad=240 pd=92 as=0 ps=0
+M1047 gnd a_n123_n191# g0 gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=240 ps=92
+
+
+C0 a1 b1 0.23fF
+C1 a_10_n99# vdd 0.96fF
+C2 g3 p3 0.05fF
+C3 b1 w_78_n111# 0.07fF
+C4 g1 w_n58_n101# 0.07fF
+C5 p1 w_74_n76# 0.07fF
+C6 w_74_n172# vdd 0.09fF
+C7 g3 a_n123_193# 0.07fF
+C8 w_74_180# b3 0.07fF
+C9 a_n123_n63# w_n58_n69# 0.07fF
+C10 w_74_n44# vdd 0.09fF
+C11 b2 p2 0.95fF
+C12 w_78_145# a3 0.07fF
+C13 w_74_212# a_10_157# 0.07fF
+C14 w_n58_187# b3 0.07fF
+C15 a1 w_n58_n37# 0.07fF
+C16 w_n58_155# a_n123_193# 0.07fF
+C17 a_n123_65# b2 0.48fF
+C18 w_74_84# vdd 0.09fF
+C19 gnd a_10_157# 0.47fF
+C20 w_74_212# a3 0.07fF
+C21 w_n58_219# a_n123_193# 0.07fF
+C22 p2 w_78_17# 0.07fF
+C23 a_10_157# b3 0.40fF
+C24 a2 a_10_29# 0.08fF
+C25 a_n123_73# a_n123_65# 0.42fF
+C26 a0 a_n123_n191# 0.07fF
+C27 a3 b3 0.23fF
+C28 a2 w_74_52# 0.07fF
+C29 w_74_212# vdd 0.09fF
+C30 a_n123_n191# w_n58_n229# 0.07fF
+C31 a_n123_n55# gnd 0.69fF
+C32 a0 w_74_n204# 0.07fF
+C33 gnd vdd 0.77fF
+C34 a_n123_n191# vdd 0.89fF
+C35 b1 p1 0.95fF
+C36 a_n123_n191# w_n58_n165# 0.07fF
+C37 a0 a_10_n227# 0.08fF
+C38 p0 g0 0.05fF
+C39 w_78_n239# b0 0.07fF
+C40 w_n58_n229# g0 0.07fF
+C41 w_74_n204# p0 0.07fF
+C42 a_n123_n63# b1 0.48fF
+C43 a_n123_65# gnd 0.03fF
+C44 a_10_n227# p0 1.05fF
+C45 vdd g0 0.45fF
+C46 a_n123_n55# a_n123_n63# 0.42fF
+C47 a1 a_10_n99# 0.08fF
+C48 g3 gnd 0.41fF
+C49 a_n123_n63# vdd 0.89fF
+C50 b1 w_74_n76# 0.07fF
+C51 vdd a_10_n227# 0.96fF
+C52 w_n58_n197# vdd 0.09fF
+C53 g2 vdd 0.45fF
+C54 w_78_145# p3 0.07fF
+C55 a_10_n99# w_74_n44# 0.07fF
+C56 b1 w_n58_n69# 0.07fF
+C57 a_n123_n63# w_n58_n101# 0.07fF
+C58 a1 w_78_n111# 0.07fF
+C59 p2 g2 0.05fF
+C60 a_10_29# vdd 0.96fF
+C61 a_n123_n63# w_n58_n37# 0.07fF
+C62 a1 w_74_n44# 0.07fF
+C63 w_n58_n69# vdd 0.09fF
+C64 a_10_29# p2 1.05fF
+C65 a_n123_65# g2 0.07fF
+C66 w_74_180# a3 0.07fF
+C67 b3 p3 0.95fF
+C68 a_n123_73# b2 0.07fF
+C69 g2 w_n58_27# 0.07fF
+C70 p2 w_74_52# 0.07fF
+C71 a2 p2 0.55fF
+C72 w_n58_59# vdd 0.09fF
+C73 gnd a_n123_193# 0.03fF
+C74 b2 w_78_17# 0.07fF
+C75 a_n123_193# b3 0.48fF
+C76 g1 gnd 0.41fF
+C77 a2 a_n123_65# 0.07fF
+C78 a_n123_201# a_n123_193# 0.42fF
+C79 a3 a_10_157# 0.08fF
+C80 a_10_n99# gnd 0.47fF
+C81 a_n123_65# w_n58_59# 0.07fF
+C82 w_n58_187# vdd 0.09fF
+C83 a_n123_n191# b0 0.48fF
+C84 p1 g1 0.05fF
+C85 a2 w_n58_91# 0.07fF
+C86 a0 p0 0.55fF
+C87 a_n123_n183# b0 0.07fF
+C88 a_10_157# vdd 0.96fF
+C89 a_n123_n63# g1 0.07fF
+C90 a_10_n99# p1 1.05fF
+C91 a0 w_n58_n165# 0.07fF
+C92 w_74_n204# b0 0.07fF
+C93 a_n123_n55# b1 0.07fF
+C94 a1 p1 0.55fF
+C95 a_n123_73# gnd 0.69fF
+C96 p1 w_78_n111# 0.07fF
+C97 a_10_n227# b0 0.40fF
+C98 w_74_n172# a_10_n227# 0.07fF
+C99 w_n58_n197# b0 0.07fF
+C100 w_n58_n229# vdd 0.09fF
+C101 a1 a_n123_n63# 0.07fF
+C102 w_n58_n165# vdd 0.09fF
+C103 w_74_180# p3 0.07fF
+C104 a1 w_74_n76# 0.07fF
+C105 w_78_145# b3 0.07fF
+C106 w_n58_n101# vdd 0.09fF
+C107 a_n123_65# vdd 0.89fF
+C108 w_n58_n37# vdd 0.09fF
+C109 a_10_29# b2 0.40fF
+C110 w_n58_27# vdd 0.09fF
+C111 g3 vdd 0.45fF
+C112 w_n58_187# a_n123_193# 0.07fF
+C113 a_n123_n191# gnd 0.03fF
+C114 a_10_157# p3 1.05fF
+C115 a_n123_n183# gnd 0.69fF
+C116 b2 w_74_52# 0.07fF
+C117 a2 b2 0.23fF
+C118 a_n123_n183# a_n123_n191# 0.42fF
+C119 w_n58_91# vdd 0.09fF
+C120 gnd a_n123_201# 0.69fF
+C121 w_n58_219# a3 0.07fF
+C122 a_n123_201# b3 0.07fF
+C123 a3 p3 0.55fF
+C124 a_10_29# w_74_84# 0.07fF
+C125 b2 w_n58_59# 0.07fF
+C126 a_n123_65# w_n58_27# 0.07fF
+C127 gnd g0 0.41fF
+C128 w_n58_155# vdd 0.09fF
+C129 a2 w_78_17# 0.07fF
+C130 a3 a_n123_193# 0.07fF
+C131 a_n123_n191# g0 0.07fF
+C132 a_n123_n63# gnd 0.03fF
+C133 a2 w_74_84# 0.07fF
+C134 a_n123_65# w_n58_91# 0.07fF
+C135 a0 w_78_n239# 0.07fF
+C136 gnd a_10_n227# 0.47fF
+C137 w_n58_219# vdd 0.09fF
+C138 a_n123_n191# w_n58_n197# 0.07fF
+C139 g2 gnd 0.41fF
+C140 a0 b0 0.23fF
+C141 a0 w_74_n172# 0.07fF
+C142 a_n123_193# vdd 0.89fF
+C143 w_78_n239# p0 0.07fF
+C144 a_10_n99# b1 0.40fF
+C145 a_10_29# gnd 0.47fF
+C146 g3 w_n58_155# 0.07fF
+C147 g1 vdd 0.45fF
+C148 b0 p0 0.95fF
+C149 c0 gnd 0.12fF 
+C150 g0 gnd 0.50fF
+C151 p0 gnd 0.13fF
+C152 b0 gnd 0.34fF
+C153 a_10_n227# gnd 0.52fF
+C154 vdd gnd 0.58fF
+C155 gnd gnd 0.96fF
+C156 a_n123_n191# gnd 0.41fF
+C157 a0 gnd 1.42fF
+C158 g1 gnd 0.50fF
+C159 p1 gnd 0.01fF
+C160 b1 gnd 0.49fF
+C161 a_10_n99# gnd 0.36fF
+C162 a_n123_n63# gnd 0.30fF
+C163 a_n123_n55# gnd 0.33fF
+C164 a1 gnd 1.42fF
+C165 g2 gnd 1.91fF
+C166 p2 gnd 0.05fF
+C167 b2 gnd 0.49fF
+C168 a_n123_65# gnd 0.40fF
+C169 a_n123_73# gnd 0.33fF
+C170 a2 gnd 1.42fF
+C171 g3 gnd 0.50fF
+C172 p3 gnd 0.13fF
+C173 b3 gnd 0.41fF
+C174 a_10_157# gnd 0.78fF
+C175 a_n123_193# gnd 0.50fF
+C176 a_n123_201# gnd 0.32fF
+C177 w_78_n239# gnd 1.36fF
+C178 w_74_n204# gnd 1.36fF
+C179 w_n58_n229# gnd 0.52fF
+C180 w_74_n172# gnd 1.36fF
+C181 w_n58_n197# gnd 0.48fF
+C182 w_78_n111# gnd 1.36fF
+C183 w_74_n76# gnd 1.36fF
+C184 w_n58_n101# gnd 0.52fF
+C185 w_74_n44# gnd 1.36fF
+C186 w_n58_n37# gnd 0.52fF
+C187 w_78_17# gnd 1.36fF
+C188 w_74_52# gnd 1.36fF
+C189 w_n58_27# gnd 1.36fF
+C190 w_74_84# gnd 1.36fF
+C191 w_n58_59# gnd 0.52fF
+C192 w_n58_91# gnd 0.52fF
+C193 w_78_145# gnd 1.36fF
+C194 w_74_180# gnd 1.36fF
+C195 w_n58_155# gnd 0.52fF
+C196 w_74_212# gnd 0.78fF
+C197 w_n58_187# gnd 0.52fF
+
+
+
+
+* Simulation Setup
+* .tran 0.1ns 10ns
+.tran 0.1ns 5120ns
+
+.control
+    set hcopypscolor = 1
+    set color0 = black
+    set color1 = white
+    run
+
+    * set currplottitle= dff_A0
+    * plot v(clk) v(a0_in)+2 v(a0)
+
+
+    * set curplottitle= A
+    * plot v(a0) v(a1)+2 v(a2)+4 v(a3)+6
+    * set curplottitle= B
+    * plot v(b0) v(b1)+2 v(b2)+4 v(b3)+6
+
+    * set curplottitle= propagate_post
+    * plot v(p0) v(p1)+2 v(p2)+4 v(p3)+6
+
+    * set curplottitle= generate_post
+    * plot v(g0) v(g1)+2 v(g2)+4 v(g3)+6 
+
+    set curplottitle= sum
+    plot v(s0) v(s1)+2 v(s2)+4 v(s3)+6 v(c4)+8
+
+** issues with c0, s0
+
+.endc
+.end
+
+
+

@@ -1,0 +1,99 @@
+.include TSMC_180nm.txt
+.include subckt.txt
+
+.param SUPPLY=1.8
+.param LAMBDA = 0.09u
+.param len = 2*LAMBDA
+.param W_P = 20*LAMBDA
+.param W_N = 10*LAMBDA
+
+.global gnd vdd 
+vdd vdd gnd 'SUPPLY'
+
+* Input Pulses
+VA A gnd pulse (0 SUPPLY 10ns .1ns .1ns 10ns 20ns)
+VB B gnd pulse (0 SUPPLY 20ns .1ns .1ns 20ns 40ns)
+VC C gnd pulse (0 SUPPLY 40ns .1ns .1ns 40ns 80ns)
+* VD D gnd pulse (0 SUPPLY 80ns .1ns .1ns 80ns 160ns)
+
+
+* SPICE3 file created from or3.ext - technology: scmos
+
+.option scale=0.09u
+
+M1000 a_13_n37# b gnd gnd CMOSN w=40 l=2
++  ad=720 pd=276 as=960 ps=368
+M1001 a_13_n37# c gnd gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1002 a_13_36# a vdd w_n1_30# CMOSP w=40 l=2
++  ad=480 pd=184 as=480 ps=184
+M1003 a_13_n37# a gnd gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1004 out a_13_n37# vdd w_101_23# CMOSP w=40 l=2
++  ad=240 pd=92 as=0 ps=0
+M1005 a_48_36# b a_13_36# w_34_30# CMOSP w=40 l=2
++  ad=480 pd=184 as=0 ps=0
+M1006 a_13_n37# c a_48_36# w_69_30# CMOSP w=40 l=2
++  ad=240 pd=92 as=0 ps=0
+M1007 out a_13_n37# gnd gnd CMOSN w=40 l=2
++  ad=240 pd=92 as=0 ps=0
+C0 b a_48_36# 0.05fF
+C1 w_101_23# vdd 0.09fF
+C2 a c 0.00fF
+C3 w_69_30# a_48_36# 0.09fF
+C4 w_n1_30# vdd 0.09fF
+C5 w_n1_30# a_13_36# 0.07fF
+C6 a_13_n37# gnd 1.42fF
+C7 w_n1_30# a 0.07fF
+C8 c gnd 0.07fF
+C9 vdd out 0.45fF
+C10 a_13_36# a_48_36# 0.49fF
+C11 c a_13_n37# 0.98fF
+C12 b a_13_36# 0.02fF
+C13 w_101_23# a_13_n37# 0.07fF
+C14 w_34_30# a_48_36# 0.07fF
+C15 a b 0.00fF
+C16 out gnd 0.41fF
+C17 w_34_30# b 0.07fF
+C18 b gnd 0.07fF
+C19 a_13_n37# out 0.07fF
+C20 a_48_36# a_13_n37# 0.56fF
+C21 a_13_36# vdd 0.49fF
+C22 c a_48_36# 0.02fF
+C23 b a_13_n37# 0.39fF
+C24 w_101_23# out 0.07fF
+C25 a a_13_36# 0.01fF
+C26 w_69_30# a_13_n37# 0.07fF
+C27 b c 0.05fF
+C28 w_69_30# c 0.07fF
+C29 w_34_30# a_13_36# 0.09fF
+C30 a_13_36# a_13_n37# 0.12fF
+C31 gnd gnd 0.32fF
+C32 out gnd 0.14fF
+C33 vdd gnd 0.11fF
+C34 a_13_n37# gnd 0.34fF
+C35 a_48_36# gnd 0.30fF
+C36 a_13_36# gnd 0.30fF
+C37 c gnd 0.96fF
+C38 b gnd 0.34fF
+C39 a gnd 0.24fF
+C40 w_101_23# gnd 1.36fF
+C41 w_69_30# gnd 1.36fF
+C42 w_34_30# gnd 1.36fF
+C43 w_n1_30# gnd 1.36fF
+
+
+
+* Simulation Setup
+.tran 0.01ns 100ns
+.control
+    set hcopypscolor = 1
+    set color0 = black
+    set color1 = white
+    run
+    set curplottitle= or3_post
+    plot v(A) v(B)+2 v(C)+4 v(out)+6
+
+.endc
+.end
+

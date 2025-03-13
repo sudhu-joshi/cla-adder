@@ -1,0 +1,128 @@
+magic
+tech scmos
+timestamp 1732034050
+<< nwell >>
+rect -1 30 25 82
+rect 31 30 57 82
+rect 63 30 89 82
+rect 95 30 121 82
+<< ntransistor >>
+rect 11 -52 13 8
+rect 43 -58 45 2
+rect 75 -58 77 2
+rect 107 -31 109 9
+<< ptransistor >>
+rect 11 36 13 76
+rect 43 36 45 76
+rect 75 36 77 76
+rect 107 36 109 76
+<< ndiffusion >>
+rect 10 -52 11 8
+rect 13 -52 14 8
+rect 42 -58 43 2
+rect 45 -58 46 2
+rect 74 -58 75 2
+rect 77 -58 78 2
+rect 106 -31 107 9
+rect 109 -31 110 9
+<< pdiffusion >>
+rect 10 36 11 76
+rect 13 36 14 76
+rect 42 36 43 76
+rect 45 36 46 76
+rect 74 36 75 76
+rect 77 36 78 76
+rect 106 36 107 76
+rect 109 36 110 76
+<< ndcontact >>
+rect 5 -52 10 8
+rect 14 -52 19 8
+rect 37 -58 42 2
+rect 46 -58 51 2
+rect 69 -58 74 2
+rect 78 -58 83 2
+rect 101 -31 106 9
+rect 110 -31 115 9
+<< pdcontact >>
+rect 5 36 10 76
+rect 14 36 19 76
+rect 37 36 42 76
+rect 46 36 51 76
+rect 69 36 74 76
+rect 78 36 83 76
+rect 101 36 106 76
+rect 110 36 115 76
+<< polysilicon >>
+rect 11 76 13 80
+rect 43 76 45 80
+rect 75 76 77 80
+rect 107 76 109 80
+rect 11 8 13 36
+rect 43 22 45 36
+rect 75 22 77 36
+rect 43 2 45 10
+rect 75 2 77 10
+rect 107 9 109 36
+rect 11 -55 13 -52
+rect 107 -34 109 -31
+rect 43 -62 45 -58
+rect 75 -62 77 -58
+<< polycontact >>
+rect 6 22 11 27
+rect 38 22 43 27
+rect 70 22 75 27
+rect 102 15 107 20
+rect 38 5 43 10
+rect 70 5 75 10
+<< metal1 >>
+rect -1 82 121 85
+rect 5 76 10 82
+rect 37 76 42 82
+rect 69 76 74 82
+rect 101 76 106 82
+rect -1 22 6 27
+rect 14 18 19 36
+rect 35 22 38 27
+rect 46 18 51 36
+rect 67 22 70 27
+rect 78 18 83 36
+rect 110 22 115 36
+rect 95 18 102 20
+rect 14 15 102 18
+rect 110 17 121 22
+rect 14 8 28 12
+rect 5 -56 10 -52
+rect 5 -62 19 -56
+rect 24 -58 28 8
+rect 35 5 38 10
+rect 46 2 62 6
+rect 67 5 70 10
+rect 78 2 83 15
+rect 110 9 115 17
+rect 58 -58 62 2
+rect 101 -38 106 -31
+rect 101 -42 115 -38
+rect 24 -62 42 -58
+rect 58 -62 74 -58
+<< metal2 >>
+rect 64 17 67 27
+rect -1 14 67 17
+rect 64 5 67 14
+<< metal3 >>
+rect 32 21 35 27
+rect -1 18 35 21
+rect 32 5 35 18
+<< pad >>
+rect 32 22 38 27
+rect 64 22 70 27
+rect 32 5 38 10
+rect 64 5 70 10
+<< labels >>
+rlabel metal1 -1 82 121 85 5 vdd!
+rlabel metal1 110 9 115 36 1 out
+rlabel metal1 -1 22 6 27 3 a
+rlabel metal3 -1 18 32 21 1 b
+rlabel metal2 -1 14 64 17 1 c
+rlabel metal1 101 -42 106 -31 1 gnd!
+rlabel metal1 5 -62 19 -56 1 gnd!
+<< end >>

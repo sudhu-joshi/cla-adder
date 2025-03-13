@@ -1,0 +1,72 @@
+.include TSMC_180nm.txt
+.include subckt.txt
+
+.param SUPPLY=1.8
+.param LAMBDA = 0.09u
+.param len = 2*LAMBDA
+.param W_P = 20*LAMBDA
+.param W_N = 10*LAMBDA
+.option scale=0.09u
+.global gnd vdd 
+vdd vdd gnd 'SUPPLY'
+
+* Input Pulses
+VA A gnd pulse (0 SUPPLY 10ns 0.1ns 0.1ns 10ns 20ns)
+VB B gnd pulse (0 SUPPLY 20ns 0.1ns 0.1ns 20ns 40ns)
+* VC C gnd pulse (0 SUPPLY 40ns .1ns .1ns 40ns 80ns)
+* VD D gnd pulse (0 SUPPLY 80ns .1ns .1ns 80ns 160ns)
+
+* SPICE3 file created from nand2.ext - technology: scmos
+
+.option scale=0.09u
+
+M1000 a_13_n32# a gnd Gnd CMOSN w=40 l=2
++  ad=480 pd=184 as=480 ps=184
+M1001 y b vdd w_31_30# CMOSP w=40 l=2
++  ad=480 pd=184 as=720 ps=276
+M1002 y a vdd w_n1_30# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1003 out y gnd Gnd CMOSN w=40 l=2
++  ad=240 pd=92 as=0 ps=0
+M1004 out y vdd w_63_30# CMOSP w=40 l=2
++  ad=240 pd=92 as=0 ps=0
+M1005 y b a_13_n32# Gnd CMOSN w=40 l=2
++  ad=240 pd=92 as=0 ps=0
+C0 out gnd 0.41fF
+C1 y out 0.07fF
+C2 b y 0.48fF
+C3 w_63_30# out 0.07fF
+C4 w_31_30# y 0.07fF
+C5 w_n1_30# vdd 0.09fF
+C6 w_n1_30# a 0.07fF
+C7 b a_13_n32# 0.07fF
+C8 y gnd 0.03fF
+C9 vdd out 0.45fF
+C10 w_31_30# vdd 0.09fF
+C11 a b 0.00fF
+C12 w_63_30# y 0.07fF
+C13 gnd a_13_n32# 0.69fF
+C14 y a_13_n32# 0.42fF
+C15 y vdd 0.89fF
+C16 w_63_30# vdd 0.09fF
+C17 a y 0.07fF
+C18 w_31_30# b 0.07fF
+C19 w_n1_30# y 0.07fF
+
+
+* Simulation Setup
+.tran 0.01ns 40ns
+.control
+    set hcopypscolor = 1
+    set color0 = black
+    set color1 = white
+    run
+    set curplottitle= and2_post
+    plot v(A) v(B) v(out)+2
+
+.endc
+.end
+
+
+
+

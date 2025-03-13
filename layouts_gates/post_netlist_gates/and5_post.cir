@@ -1,0 +1,338 @@
+.include TSMC_180nm.txt
+.include subckt.txt
+
+.param SUPPLY=1.8
+.param LAMBDA = 0.09u
+.param len = 2*LAMBDA
+.param W_P = 20*LAMBDA
+.param W_N = 10*LAMBDA
+
+.global gnd vdd 
+vdd vdd gnd 'SUPPLY'
+
+* Input Pulses
+VA A gnd pulse (0 SUPPLY 10ns .1ns .1ns 10ns 20ns)
+VB B gnd pulse (0 SUPPLY 20ns .1ns .1ns 20ns 40ns)
+VC C gnd pulse (0 SUPPLY 40ns .1ns .1ns 40ns 80ns)
+VD D gnd pulse (0 SUPPLY 80ns .1ns .1ns 80ns 160ns)
+VE E gnd pulse (0 SUPPLY 160ns .1ns .1ns 160ns 320ns)
+
+
+
+* SPICE3 file created from and5.ext - technology: scmos
+
+.option scale=0.09u
+
+M1000 a_13_36# b vdd w_31_30# CMOSP w=40 l=2
++  ad=1200 pd=460 as=1440 ps=552
+M1001 a_109_n106# d a_77_n106# Gnd CMOSN w=100 l=2
++  ad=1200 pd=424 as=1200 ps=424
+M1002 a_13_36# d vdd w_95_30# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1003 a_77_n106# c a_45_n106# Gnd CMOSN w=100 l=2
++  ad=0 pd=0 as=1200 ps=424
+M1004 a_13_36# a vdd w_n1_30# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1005 a_13_36# c vdd w_63_30# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1006 out a_13_36# vdd w_161_30# CMOSP w=40 l=2
++  ad=240 pd=92 as=0 ps=0
+M1007 out a_13_36# gnd Gnd CMOSN w=40 l=2
++  ad=240 pd=92 as=840 ps=304
+M1008 a_13_n100# a gnd Gnd CMOSN w=100 l=2
++  ad=1200 pd=424 as=0 ps=0
+M1009 a_13_36# e vdd w_127_30# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1010 a_13_36# e a_109_n106# Gnd CMOSN w=100 l=2
++  ad=600 pd=212 as=0 ps=0
+M1011 a_45_n106# b a_13_n100# Gnd CMOSN w=100 l=2
++  ad=0 pd=0 as=0 ps=0
+C0 w_n1_30# vdd 0.09fF
+C1 d a_13_36# 0.20fF
+C2 b e 0.06fF
+C3 c d 0.05fF
+C4 a a_13_36# 0.07fF
+C5 a_13_36# a_109_n106# 1.03fF
+C6 w_95_30# a_13_36# 0.07fF
+C7 a c 0.00fF
+C8 w_127_30# e 0.07fF
+C9 d a_77_n106# 0.08fF
+C10 a_13_36# vdd 2.23fF
+C11 w_n1_30# a_13_36# 0.07fF
+C12 b a_45_n106# 0.01fF
+C13 a_77_n106# a_109_n106# 1.03fF
+C14 w_31_30# b 0.07fF
+C15 w_161_30# vdd 0.09fF
+C16 w_63_30# vdd 0.09fF
+C17 vdd out 0.45fF
+C18 d e 0.21fF
+C19 c a_13_36# 0.73fF
+C20 b d 0.08fF
+C21 a e 0.00fF
+C22 w_161_30# a_13_36# 0.07fF
+C23 e a_109_n106# 0.08fF
+C24 w_63_30# a_13_36# 0.07fF
+C25 a b 0.00fF
+C26 a_13_36# out 0.07fF
+C27 c a_77_n106# 0.01fF
+C28 e a_13_n100# 0.01fF
+C29 w_63_30# c 0.07fF
+C30 b a_13_n100# 0.10fF
+C31 a_13_n100# gnd 1.13fF
+C32 w_161_30# out 0.07fF
+C33 a_13_n100# a_45_n106# 1.03fF
+C34 w_127_30# vdd 0.09fF
+C35 w_31_30# vdd 0.09fF
+C36 e a_13_36# 0.25fF
+C37 c e 0.04fF
+C38 b a_13_36# 0.32fF
+C39 b c 0.05fF
+C40 w_127_30# a_13_36# 0.07fF
+C41 a d 0.01fF
+C42 d a_109_n106# 0.01fF
+C43 w_31_30# a_13_36# 0.07fF
+C44 w_95_30# d 0.07fF
+C45 c a_45_n106# 0.10fF
+C46 a_45_n106# a_77_n106# 1.03fF
+C47 out gnd 0.44fF
+C48 w_n1_30# a 0.07fF
+C49 w_95_30# vdd 0.09fF
+C50 gnd Gnd 0.30fF
+C51 a_109_n106# Gnd 0.64fF
+C52 a_77_n106# Gnd 0.64fF
+C53 a_45_n106# Gnd 0.64fF
+C54 a_13_n100# Gnd 0.65fF
+C55 out Gnd 0.17fF
+C56 vdd Gnd 0.19fF
+C57 a_13_36# Gnd 0.36fF
+C58 e Gnd 1.02fF
+C59 d Gnd 0.94fF
+C60 c Gnd 1.10fF
+C61 b Gnd 0.40fF
+C62 a Gnd 0.20fF
+C63 w_161_30# Gnd 1.36fF
+C64 w_127_30# Gnd 1.36fF
+C65 w_95_30# Gnd 0.00fF
+
+
+
+
+
+
+* Simulation Setup
+.tran 0.01ns 600ns
+.control
+    set hcopypscolor = 1
+    set color0 = black
+    set color1 = white
+    run
+    set curplottitle= and5_post
+    plot v(A) v(B)+2 v(C)+4 v(D)+6 v(E)+8 v(out)+10
+
+
+    
+
+.endc
+.end
+
+
+
+
+
+
+* * SPICE3 file created from and5.ext - technology: scmos
+
+* .option scale=0.09u
+
+* M1000 a_13_36# b vdd w_31_30# CMOSP w=40 l=2
+* +  ad=1200 pd=460 as=1440 ps=552
+* M1001 a_109_n106# d a_77_n106# Gnd CMOSN w=100 l=2
+* +  ad=1200 pd=424 as=1200 ps=424
+* M1002 a_13_36# d vdd w_95_30# CMOSP w=40 l=2
+* +  ad=0 pd=0 as=0 ps=0
+* M1003 a_77_n106# c a_45_n106# Gnd CMOSN w=100 l=2
+* +  ad=0 pd=0 as=1200 ps=424
+* M1004 a_13_36# a vdd w_n1_30# CMOSP w=40 l=2
+* +  ad=0 pd=0 as=0 ps=0
+* M1005 a_13_36# c vdd w_63_30# CMOSP w=40 l=2
+* +  ad=0 pd=0 as=0 ps=0
+* M1006 out a_13_36# vdd w_161_30# CMOSP w=40 l=2
+* +  ad=240 pd=92 as=0 ps=0
+* M1007 out a_13_36# gnd Gnd CMOSN w=40 l=2
+* +  ad=240 pd=92 as=840 ps=304
+* M1008 a_13_n100# a gnd Gnd CMOSN w=100 l=2
+* +  ad=1200 pd=424 as=0 ps=0
+* M1009 a_13_36# e vdd w_127_30# CMOSP w=40 l=2
+* +  ad=0 pd=0 as=0 ps=0
+* M1010 a_13_36# e a_109_n106# Gnd CMOSN w=100 l=2
+* +  ad=600 pd=212 as=0 ps=0
+* M1011 a_45_n106# b a_13_n100# Gnd CMOSN w=100 l=2
+* +  ad=0 pd=0 as=0 ps=0
+* C0 w_n1_30# vdd 0.09fF
+* C1 d a_13_36# 0.20fF
+* C2 b e 0.06fF
+* C3 c d 0.05fF
+* C4 a a_13_36# 0.07fF
+* C5 a_13_36# a_109_n106# 1.03fF
+* C6 w_95_30# a_13_36# 0.07fF
+* C7 a c 0.00fF
+* C8 w_127_30# e 0.07fF
+* C9 d a_77_n106# 0.08fF
+* C10 a_13_36# vdd 2.23fF
+* C11 w_n1_30# a_13_36# 0.07fF
+* C12 b a_45_n106# 0.01fF
+* C13 a_77_n106# a_109_n106# 1.03fF
+* C14 w_31_30# b 0.07fF
+* C15 w_161_30# vdd 0.09fF
+* C16 w_63_30# vdd 0.09fF
+* C17 vdd out 0.45fF
+* C18 d e 0.21fF
+* C19 c a_13_36# 0.73fF
+* C20 b d 0.08fF
+* C21 a e 0.00fF
+* C22 w_161_30# a_13_36# 0.07fF
+* C23 e a_109_n106# 0.08fF
+* C24 w_63_30# a_13_36# 0.07fF
+* C25 a b 0.00fF
+* C26 a_13_36# out 0.07fF
+* C27 c a_77_n106# 0.01fF
+* C28 e a_13_n100# 0.01fF
+* C29 w_63_30# c 0.07fF
+* C30 b a_13_n100# 0.10fF
+* C31 a_13_n100# gnd 1.13fF
+* C32 w_161_30# out 0.07fF
+* C33 a_13_n100# a_45_n106# 1.03fF
+* C34 w_127_30# vdd 0.09fF
+* C35 w_31_30# vdd 0.09fF
+* C36 e a_13_36# 0.25fF
+* C37 c e 0.04fF
+* C38 b a_13_36# 0.32fF
+* C39 b c 0.05fF
+* C40 w_127_30# a_13_36# 0.07fF
+* C41 a d 0.01fF
+* C42 d a_109_n106# 0.01fF
+* C43 w_31_30# a_13_36# 0.07fF
+* C44 w_95_30# d 0.07fF
+* C45 c a_45_n106# 0.10fF
+* C46 a_45_n106# a_77_n106# 1.03fF
+* C47 out gnd 0.44fF
+* C48 w_n1_30# a 0.07fF
+* C49 w_95_30# vdd 0.09fF
+* C50 gnd Gnd 0.30fF
+* C51 a_109_n106# Gnd 0.64fF
+* C52 a_77_n106# Gnd 0.64fF
+* C53 a_45_n106# Gnd 0.64fF
+* C54 a_13_n100# Gnd 0.65fF
+* C55 out Gnd 0.17fF
+* C56 vdd Gnd 0.19fF
+* C57 a_13_36# Gnd 0.36fF
+* C58 e Gnd 1.02fF
+* C59 d Gnd 0.94fF
+* C60 c Gnd 1.10fF
+* C61 b Gnd 0.40fF
+* C62 a Gnd 0.20fF
+* C63 w_161_30# Gnd 1.36fF
+* C64 w_127_30# Gnd 1.36fF
+* C65 w_95_30# Gnd 0.00fF
+
+
+
+
+
+* * SPICE3 file created from and5.ext - technology: scmos
+* * not sized
+* .option scale=0.09u
+
+* M1000 a_13_36# e a_109_n46# gnd CMOSN w=40 l=2
+* +  ad=240 pd=92 as=480 ps=184
+* M1001 a_45_n46# b a_13_n40# gnd CMOSN w=40 l=2
+* +  ad=480 pd=184 as=480 ps=184
+* M1002 a_13_36# b vdd w_31_30# CMOSP w=40 l=2
+* +  ad=1200 pd=460 as=1440 ps=552
+* M1003 a_13_36# d vdd w_95_30# CMOSP w=40 l=2
+* +  ad=0 pd=0 as=0 ps=0
+* M1004 a_109_n46# d a_77_n46# gnd CMOSN w=40 l=2
+* +  ad=0 pd=0 as=480 ps=184
+* M1005 a_13_36# a vdd w_n1_30# CMOSP w=40 l=2
+* +  ad=0 pd=0 as=0 ps=0
+* M1006 a_13_n40# a gnd gnd CMOSN w=40 l=2
+* +  ad=0 pd=0 as=480 ps=184
+* M1007 a_13_36# c vdd w_63_30# CMOSP w=40 l=2
+* +  ad=0 pd=0 as=0 ps=0
+* M1008 out a_13_36# vdd w_161_30# CMOSP w=40 l=2
+* +  ad=240 pd=92 as=0 ps=0
+* M1009 a_77_n46# c a_45_n46# gnd CMOSN w=40 l=2
+* +  ad=0 pd=0 as=0 ps=0
+* M1010 out a_13_36# gnd gnd CMOSN w=40 l=2
+* +  ad=240 pd=92 as=0 ps=0
+* M1011 a_13_36# e vdd w_127_30# CMOSP w=40 l=2
+* +  ad=0 pd=0 as=0 ps=0
+* C0 d a_13_36# 0.20fF
+* C1 b e 0.06fF
+* C2 c d 0.05fF
+* C3 a a_13_36# 0.07fF
+* C4 w_95_30# a_13_36# 0.07fF
+* C5 a c 0.00fF
+* C6 w_127_30# e 0.07fF
+* C7 a_13_36# a_109_n46# 0.41fF
+* C8 w_n1_30# a_13_36# 0.07fF
+* C9 d a_77_n46# 0.08fF
+* C10 w_31_30# b 0.07fF
+* C11 a_13_36# vdd 2.23fF
+* C12 b a_45_n46# 0.01fF
+* C13 w_161_30# vdd 0.09fF
+* C14 a_77_n46# a_109_n46# 0.41fF
+* C15 w_63_30# vdd 0.09fF
+* C16 vdd out 0.45fF
+* C17 d e 0.21fF
+* C18 c a_13_36# 0.73fF
+* C19 b d 0.08fF
+* C20 a e 0.00fF
+* C21 w_161_30# a_13_36# 0.07fF
+* C22 w_63_30# a_13_36# 0.07fF
+* C23 a b 0.00fF
+* C24 e a_109_n46# 0.08fF
+* C25 w_63_30# c 0.07fF
+* C26 c a_77_n46# 0.01fF
+* C27 e a_13_n40# 0.01fF
+* C28 a_13_36# out 0.07fF
+* C29 b a_13_n40# 0.10fF
+* C30 w_161_30# out 0.07fF
+* C31 w_127_30# vdd 0.09fF
+* C32 a_13_n40# gnd 0.51fF
+* C33 w_31_30# vdd 0.09fF
+* C34 a_13_n40# a_45_n46# 0.41fF
+* C35 e a_13_36# 0.25fF
+* C36 c e 0.04fF
+* C37 b a_13_36# 0.32fF
+* C38 b c 0.05fF
+* C39 w_127_30# a_13_36# 0.07fF
+* C40 a d 0.01fF
+* C41 w_31_30# a_13_36# 0.07fF
+* C42 w_95_30# d 0.07fF
+* C43 d a_109_n46# 0.01fF
+* C44 c a_45_n46# 0.10fF
+* C45 w_n1_30# a 0.07fF
+* C46 w_95_30# vdd 0.09fF
+* C47 out gnd 0.44fF
+* C48 a_45_n46# a_77_n46# 0.41fF
+* C49 w_n1_30# vdd 0.09fF
+* C50 gnd gnd 0.24fF
+* C51 a_109_n46# gnd 0.32fF
+* C52 a_77_n46# gnd 0.26fF
+* C53 a_45_n46# gnd 0.32fF
+* C54 a_13_n40# gnd 0.34fF
+* C55 out gnd 0.16fF
+* C56 vdd gnd 0.40fF
+* C57 a_13_36# gnd 1.01fF
+* C58 e gnd 0.70fF
+* C59 d gnd 0.43fF
+* C60 c gnd 1.08fF
+* C61 b gnd 0.38fF
+* C62 a gnd 0.27fF
+* C63 w_161_30# gnd 0.12fF
+* C64 w_127_30# gnd 0.16fF
+* C65 w_95_30# gnd 0.13fF
+* C66 w_63_30# gnd 1.36fF
+* C67 w_31_30# gnd 1.36fF
+* C68 w_n1_30# gnd 1.36fF

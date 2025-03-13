@@ -1,0 +1,127 @@
+.include TSMC_180nm.txt
+.include subckt.txt
+
+.param SUPPLY=1.8
+.param LAMBDA = 0.09u
+.param len = 2*LAMBDA
+.param W_P = 20*LAMBDA
+.param W_N = 10*LAMBDA
+
+.global gnd vdd 
+vdd vdd gnd 'SUPPLY'
+
+* * Input Pulses
+* * Using PWL for inputs
+* VA0 a0 gnd pwl(0ns 0V)
+* VA1 a1 gnd PWL(0ns 1.8V)
+* VA2 a2 gnd PWL(0ns 1.8V)
+* VA3 a3 gnd PWL(0ns 0V)
+
+* VB0 b0 gnd PWL(0ns 1.8V)
+* VB1 b1 gnd PWL(0ns 1.8V)
+* VB2 b2 gnd PWL(0ns 1.8V)
+* VB3 b3 gnd PWL(0ns 1.8V)
+
+* VC0 c0 gnd PWL(0ns 0V)
+
+
+VA0 a0 gnd pulse (0 SUPPLY 10ns 1ps 1ps 10ns 20ns)
+VA1 a1 gnd pulse (0 SUPPLY 20ns 1ps 1ps 20ns 40ns)
+VA2 a2 gnd pulse (0 SUPPLY 40ns 1ps 1ps 40ns 80ns)
+VA3 a3 gnd pulse (0 SUPPLY 80ns 1ps 1ps 80ns 160ns)
+
+VB0 b0 gnd pulse (0 SUPPLY 160ns 1ps 1ps 160ns 320ns)
+VB1 b1 gnd pulse (0 SUPPLY 320ns 1ps 1ps 320ns 640ns)
+VB2 b2 gnd pulse (0 SUPPLY 640ns 1ps 1ps 640ns 1280ns)
+VB3 b3 gnd pulse (0 SUPPLY 1280ns 1ps 1ps 1280ns 2560ns)
+
+Vclk clk gnd pulse (0 SUPPLY 1ns 1ps 1ps 2ns 4ns)
+
+VC0 c0 gnd pulse (0 SUPPLY 2560ns 1ps 1ps 2560ns 5120ns)
+
+
+
+
+
+* Xblock_A a3 a2 a1 a0 a3_in a2_in a1_in a0_in clk vdd gnd d_block_4bit
+* Xblock_B b3 b2 b1 b0 b3_in b2_in b1_in b0_in clk vdd gnd d_block_4bit
+
+.subckt propgen a0 a1 a2 a3 b0 b1 b2 b3 p0 g0 p1 g1 p2 g2 p3 g3 vdd gnd
+* Propagate using XOR
+Xexor0 p0 a0 b0 vdd gnd exor2
+Xexor1 p1 a1 b1 vdd gnd exor2
+Xexor2 p2 a2 b2 vdd gnd exor2
+Xexor3 p3 a3 b3 vdd gnd exor2
+
+* Generate using AND
+Xand0 g0 a0 b0 vdd gnd and2
+Xand1 g1 a1 b1 vdd gnd and2
+Xand2 g2 a2 b2 vdd gnd and2
+Xand3 g3 a3 b3 vdd gnd and2
+.ends propgen
+
+
+.subckt carry_logic C Gi Pi Ci vdd gnd
+* Carry Logic: Ci+1 = Gi+(Pi.Ci)
+Xprod prod Pi Ci vdd gnd and2
+Xsum C Gi prod vdd gnd or2
+.ends carry_logic
+
+.subckt carry_block c1 c2 c3 c4 c0 p0 p1 p2 p3 g0 g1 g2 g3 vdd gnd
+* Carry Logic: Ci+1 = Gi+(Pi.Ci)
+Xcarry1 c1 g0 p0 c0 vdd gnd carry_logic
+Xcarry2 c2 g1 p1 c1 vdd gnd carry_logic
+Xcarry3 c3 g2 p2 c2 vdd gnd carry_logic
+Xcarry4 c4 g3 p3 c3 vdd gnd carry_logic
+.ends carry_block
+
+.subckt sum_block p0 p1 p2 p3 c0 c1 c2 c3 s0 s1 s2 s3 vdd gnd
+* Sum using XOR
+Xexor0 s0 p0 c0 vdd gnd exor2
+Xexor1 s1 p1 c1 vdd gnd exor2
+Xexor2 s2 p2 c2 vdd gnd exor2
+Xexor3 s3 p3 c3 vdd gnd exor2
+.ends sum_block
+
+* * <A> <B> <G> <P> <S> <C>
+.subckt CLA a0 a1 a2 a3 b0 b1 b2 b3 p0 g0 p1 g1 p2 g2 p3 g3 s0 s1 s2 s3 c1 c2 c3 c4 c0 vdd gnd
+* Sum using XOR
+X_prop_gen a0 a1 a2 a3 b0 b1 b2 b3 p0 g0 p1 g1 p2 g2 p3 g3 vdd gnd propgen
+X_carry_block c1 c2 c3 c4 c0 p0 p1 p2 p3 g0 g1 g2 g3 vdd gnd carry_block
+X_sum p0 p1 p2 p3 c0 c1 c2 c3 s0 s1 s2 s3 vdd gnd sum_block
+.ends CLA
+
+X_CLA a0 a1 a2 a3 b0 b1 b2 b3 p0 g0 p1 g1 p2 g2 p3 g3 s0 s1 s2 s3 c1 c2 c3 c4 c0 vdd gnd CLA
+
+
+* Simulation Setup
+.tran 0.1ns 1000ns
+
+.control
+    set hcopypscolor = 1
+    set color0 = black
+    set color1 = white
+    run
+
+
+    * set curplottitle= A
+    * plot v(a0) v(a1)+2 v(a2)+4 v(a3)+6 v(c0)+8
+    * set curplottitle= B
+    * plot v(b0) v(b1)+2 v(b2)+4 v(b3)+6 v(c0)+8
+
+    * set curplottitle= propagate_pre
+    * plot v(p0) v(p1)+2 v(p2)+4 v(p3)+6
+
+    * set curplottitle= generate_pre
+    * plot v(g0) v(g1)+2 v(g2)+4 v(g3)+6 
+
+    * set curplottitle= generate_pre
+    * plot v(c0) v(c1)+2 v(c2)+4 v(c3)+6 
+
+    * set curplottitle= sum_pre
+    * plot v(s0) v(s1)+2 v(s2)+4 v(s3)+6 v(c4)+8
+
+** issues with c0, s0
+
+.endc
+.end

@@ -1,0 +1,110 @@
+magic
+tech scmos
+timestamp 1732015181
+<< nwell >>
+rect 5 77 31 129
+rect 42 77 68 129
+rect 74 77 100 129
+<< ntransistor >>
+rect 17 15 19 55
+rect 54 15 56 55
+rect 86 16 88 56
+<< ptransistor >>
+rect 17 83 19 123
+rect 54 83 56 123
+rect 86 83 88 123
+<< ndiffusion >>
+rect 16 15 17 55
+rect 19 15 20 55
+rect 53 15 54 55
+rect 56 15 57 55
+rect 85 16 86 56
+rect 88 16 89 56
+<< pdiffusion >>
+rect 16 83 17 123
+rect 19 83 20 123
+rect 53 83 54 123
+rect 56 83 57 123
+rect 85 83 86 123
+rect 88 83 89 123
+<< ndcontact >>
+rect 11 15 16 55
+rect 20 15 25 55
+rect 48 15 53 55
+rect 57 15 62 55
+rect 80 16 85 56
+rect 89 16 94 56
+<< pdcontact >>
+rect 11 83 16 123
+rect 20 83 25 123
+rect 48 83 53 123
+rect 57 83 62 123
+rect 80 83 85 123
+rect 89 83 94 123
+<< polysilicon >>
+rect 17 123 19 127
+rect 54 123 56 127
+rect 86 123 88 127
+rect 17 55 19 83
+rect 54 55 56 83
+rect 86 56 88 83
+rect 17 12 19 15
+rect 54 12 56 15
+rect 86 13 88 16
+<< polycontact >>
+rect 12 69 17 74
+rect 49 69 54 74
+rect 81 64 86 69
+<< metal1 >>
+rect 28 135 77 138
+rect 28 132 31 135
+rect 74 132 77 135
+rect 5 129 31 132
+rect 34 129 68 132
+rect 74 129 100 132
+rect 11 123 16 129
+rect 20 74 25 83
+rect 34 74 39 129
+rect 48 123 53 129
+rect 80 123 85 129
+rect 57 75 62 83
+rect 5 69 12 74
+rect 20 69 39 74
+rect 42 69 49 74
+rect 57 71 71 75
+rect 67 69 71 71
+rect 89 69 94 83
+rect 67 64 81 69
+rect 89 64 100 69
+rect 67 61 71 64
+rect 20 56 33 59
+rect 57 57 71 61
+rect 20 55 36 56
+rect 57 55 62 57
+rect 89 56 94 64
+rect 28 51 36 55
+rect 11 9 16 15
+rect 48 9 53 15
+rect 80 9 85 16
+rect 11 6 85 9
+<< metal2 >>
+rect 59 67 67 69
+rect 42 64 67 67
+rect 42 63 63 64
+rect 42 56 45 63
+rect 36 51 45 56
+<< metal3 >>
+rect 37 69 42 74
+rect 37 67 40 69
+rect 5 62 40 67
+<< pad >>
+rect 42 69 47 74
+rect 63 64 71 69
+rect 33 51 39 56
+<< labels >>
+rlabel metal1 5 69 12 74 3 a
+rlabel metal3 5 62 40 67 1 b
+rlabel metal1 11 6 85 9 1 gnd!
+rlabel metal1 89 56 94 83 1 out
+rlabel metal1 28 135 77 138 5 vdd!
+<< end >>

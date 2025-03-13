@@ -1,0 +1,84 @@
+* SPICE3 file created from d_ff.ext - technology: scmos
+
+.option scale=0.09u
+
+M1000 out y3 gnd Gnd nfet w=30 l=2
++  ad=180 pd=72 as=720 ps=288
+M1001 y1 A gnd Gnd nfet w=30 l=2
++  ad=180 pd=72 as=0 ps=0
+M1002 y1 clk x1 w_347_n202# pfet w=40 l=2
++  ad=240 pd=92 as=480 ps=184
+M1003 out y3 vdd w_443_n202# pfet w=40 l=2
++  ad=240 pd=92 as=960 ps=368
+M1004 x1 A vdd w_312_n202# pfet w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1005 y2 clk vdd w_379_n202# pfet w=40 l=2
++  ad=240 pd=92 as=0 ps=0
+M1006 y3 y2 vdd w_411_n202# pfet w=40 l=2
++  ad=240 pd=92 as=0 ps=0
+M1007 y2 y1 x2 Gnd nfet w=30 l=2
++  ad=180 pd=72 as=360 ps=144
+M1008 y3 clk x3 Gnd nfet w=30 l=2
++  ad=180 pd=72 as=360 ps=144
+M1009 x3 y2 gnd Gnd nfet w=30 l=2
++  ad=0 pd=0 as=0 ps=0
+M1010 x2 clk gnd Gnd nfet w=30 l=2
++  ad=0 pd=0 as=0 ps=0
+C0 w_379_n202# vdd 0.07fF
+C1 w_347_n202# x1 0.07fF
+C2 gnd y2 0.09fF
+C3 out y3 0.07fF
+C4 x2 clk 0.01fF
+C5 vdd y3 0.41fF
+C6 y1 clk 0.61fF
+C7 w_379_n202# clk 0.07fF
+C8 clk y3 0.04fF
+C9 A clk 0.00fF
+C10 w_411_n202# y3 0.07fF
+C11 x1 w_312_n202# 0.07fF
+C12 gnd x3 0.49fF
+C13 out gnd 0.31fF
+C14 y1 x2 0.13fF
+C15 vdd x1 0.65fF
+C16 x3 y2 0.02fF
+C17 gnd clk 0.05fF
+C18 vdd y2 0.41fF
+C19 out w_443_n202# 0.07fF
+C20 y1 A 0.05fF
+C21 w_347_n202# clk 0.07fF
+C22 vdd w_443_n202# 0.07fF
+C23 clk y2 0.40fF
+C24 w_411_n202# y2 0.07fF
+C25 vdd w_312_n202# 0.07fF
+C26 gnd x2 0.49fF
+C27 y1 gnd 0.63fF
+C28 vdd out 0.41fF
+C29 x1 y1 0.59fF
+C30 w_347_n202# y1 0.07fF
+C31 x3 clk 0.07fF
+C32 x2 y2 0.31fF
+C33 gnd y3 0.10fF
+C34 gnd A 0.07fF
+C35 y1 y2 0.06fF
+C36 w_379_n202# y2 0.07fF
+C37 vdd w_411_n202# 0.07fF
+C38 y2 y3 0.07fF
+C39 w_443_n202# y3 0.07fF
+C40 w_312_n202# A 0.07fF
+C41 x3 y3 0.31fF
+C42 x3 Gnd 0.14fF
+C43 x2 Gnd 0.22fF
+C44 gnd Gnd 0.13fF
+C45 out Gnd 0.10fF
+C46 y1 Gnd 0.36fF
+C47 x1 Gnd 0.13fF
+C48 vdd Gnd 0.01fF
+C49 y3 Gnd 0.36fF
+C50 y2 Gnd 0.36fF
+C51 clk Gnd 0.53fF
+C52 A Gnd 0.22fF
+C53 w_443_n202# Gnd 1.36fF
+C54 w_411_n202# Gnd 1.36fF
+C55 w_379_n202# Gnd 0.68fF
+C56 w_347_n202# Gnd 0.68fF
+C57 w_312_n202# Gnd 1.36fF
