@@ -1,0 +1,78 @@
+.include TSMC_180nm.txt
+.include subckt.txt
+
+.param SUPPLY=1.8
+.param LAMBDA = 0.09u
+.param len = 2*LAMBDA
+.param W_P = 20*LAMBDA
+.param W_N = 10*LAMBDA
+
+.global gnd vdd 
+vdd vdd gnd 'SUPPLY'
+
+* Input Pulses
+VA A gnd pulse (0 SUPPLY 1.99ns 0.01ns .01ns 4ns 8ns)
+VB B gnd pulse (0 SUPPLY 20ns .1ns .1ns 20ns 40ns)
+* VC C gnd pulse (0 SUPPLY 40ns .1ns .1ns 40ns 80ns)
+* VD D gnd pulse (0 SUPPLY 80ns .1ns .1ns 80ns 160ns)
+Vclk clk gnd pulse (0 SUPPLY 1ns .01ns .01ns 0.5ns 1ns)
+
+
+* 11T TSPC Implementation
+.subckt d_ff out in clk vdd gnd 
+
+M_PMOS1_A x1 in vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_PMOS1_B y1 clk x1 vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_NMOS1_A gnd in y1 gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+
+M_PMOS2_A y2 clk vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_NMOS2_A x2 y1 y2 gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOS2_B gnd clk x2 gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+
+M_PMOS3_A y3 y2 vdd vdd CMOSP W={W_P} L={len} 
++ AS={5*W_P*LAMBDA} PS={10*LAMBDA+2*W_P} 
++ AD={5*W_P*LAMBDA} PD={10*LAMBDA+2*W_P}
+
+M_NMOS3_A x3 clk y3 gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+M_NMOS3_B gnd y2 x3 gnd CMOSN W={W_N} L={len} 
++ AS={5*W_N*LAMBDA} PS={10*LAMBDA+2*W_N} 
++ AD={5*W_N*LAMBDA} PD={10*LAMBDA+2*W_N}
+
+Xinv out y3 vdd gnd inv
+.ends d_ff
+
+Xd_ff out A clk vdd gnd d_ff
+
+* Simulation Setup
+.tran 0.01ns 10ns
+.control
+    set hcopypscolor = 1
+    set color0 = black
+    set color1 = white
+
+    run
+    set curplottitle= d_ff
+    plot v(clk) v(A)+2 v(out)+4
+.endc
+.end
